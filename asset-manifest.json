@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/crwn-clothing-redux/static/css/main.0072b7d7.css",
+    "main.js": "/crwn-clothing-redux/static/js/main.e49d5937.js",
+    "static/media/bootstrap-icons.woff?": "/crwn-clothing-redux/static/media/bootstrap-icons.4753c5ba57962b4d7bf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/crwn-clothing-redux/static/media/bootstrap-icons.6d63d0501e5ed7b79dab.woff2",
+    "static/media/shopping-bag.svg": "/crwn-clothing-redux/static/media/shopping-bag.a688874f6f1507316bdfa420328a4a53.svg",
+    "index.html": "/crwn-clothing-redux/index.html",
+    "static/media/user-icon.svg": "/crwn-clothing-redux/static/media/user-icon.1330e4488caad414b7fbeb86d509775a.svg",
+    "static/media/crown.svg": "/crwn-clothing-redux/static/media/crown.207ae289b221bfaca0108507f9bb2f85.svg",
+    "main.0072b7d7.css.map": "/crwn-clothing-redux/static/css/main.0072b7d7.css.map",
+    "main.e49d5937.js.map": "/crwn-clothing-redux/static/js/main.e49d5937.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0072b7d7.css",
+    "static/js/main.e49d5937.js"
+  ]
+}
