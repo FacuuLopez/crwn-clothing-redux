@@ -4,9 +4,21 @@ import { Link } from 'react-router-dom';
 export const NavigationContainer = styled.div`
   height: 70px;
   width: 100%;
-  display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
+`;
+
+export const CartIconSpan = styled.div`
+  position: absolute;
+  display:inline-block;
+  padding: 0px 4px;
+  line-height: 1;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -20%);
 `;
 
 export const LogoContainer = styled(Link)`

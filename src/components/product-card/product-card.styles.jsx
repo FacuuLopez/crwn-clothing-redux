@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ReactComponent as LikeIcon } from '../../assets/like-logo.svg';
 
 export const ProductCartContainer = styled.div`
   width: 100%;
@@ -33,6 +34,21 @@ export const ProductCartContainer = styled.div`
       display: flex;
     }
   }
+`;
+
+export const LikeIconStyle = styled(LikeIcon)`
+height: 24px;
+width: 24px;
+/* fill: ${props => props.isLiked ? 'red' : 'gray'};
+transition: all 0.2s ease-in-out; */
+
+&:hover {
+  transform: scale(1.1);
+}
+
+&:active {
+  transform: scale(0.9);
+}
 `;
 
 export const Footer = styled.div`

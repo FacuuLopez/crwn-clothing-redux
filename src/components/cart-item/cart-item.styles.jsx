@@ -1,25 +1,37 @@
 import styled from 'styled-components';
 
-export const CartItemContainer = styled.div`
+export const CartDropdownContainer = styled.div`
   width: 100%;
   display: flex;
   height: 80px;
-  margin-bottom: 15px;
-
-  img {
-    width: 30%;
-  }
+  margin-bottom: 9px;
+  font-size: 16px;
+  border-bottom: 1px solid darkgrey;
+  align-items: center;
 `;
 
-export const ItemDetails = styled.div`
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 10px 20px;
+export const ImageContainer = styled.div`
+  padding-right: 10px;
+`;
 
-  span {
-    font-size: 16px;
-  }
+export const BaseSpan = styled.span`
+   max-width:100px; 
+`;
+
+export const Quantity = styled(BaseSpan)`
+  display: flex;
+  margin: 0 5px;
+`;
+
+export const Arrow = styled.div`
+  cursor: pointer;
+`;
+
+export const Value = styled.span`
+  margin: 0 3px;
+`;
+
+export const RemoveButton = styled.div`
+  padding-left: 8px;
+  cursor: pointer;
 `;

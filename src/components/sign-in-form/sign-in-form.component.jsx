@@ -5,7 +5,7 @@ import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
 import {
   signInAuthUserWithEmailAndPassword,
-  signInWithGooglePopup,
+  signInAuthWithGooglePopup,
 } from '../../utils/firebase/firebase.utils';
 
 import { SignInContainer, ButtonsContainer } from './sign-in-form.styles';
@@ -24,7 +24,7 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    await signInAuthWithGooglePopup();
   };
 
   const handleSubmit = async (event) => {
@@ -48,7 +48,7 @@ const SignInForm = () => {
     <SignInContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
-      <form onSubmit={handleSubmit}>
+
         <FormInput
           label='Email'
           type='email'
@@ -71,12 +71,11 @@ const SignInForm = () => {
           <Button
             buttonType={BUTTON_TYPE_CLASSES.google}
             type='button'
-            onClick={signInWithGoogle}
+            onClick={()=>signInWithGoogle()}
           >
             Sign In With Google
           </Button>
         </ButtonsContainer>
-      </form>
     </SignInContainer>
   );
 };

@@ -25,15 +25,15 @@ const SignUpForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
 
     if (password !== confirmPassword) {
       alert('passwords do not match');
       return;
     }
-
+    alert('llegaaasdadsawq')
     try {
+      
       const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password
@@ -60,7 +60,6 @@ const SignUpForm = () => {
     <SignUpContainer>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
-      <form onSubmit={handleSubmit}>
         <FormInput
           label='Display Name'
           type='text'
@@ -96,8 +95,7 @@ const SignUpForm = () => {
           name='confirmPassword'
           value={confirmPassword}
         />
-        <Button type='submit'>Sign Up</Button>
-      </form>
+        <Button type='submit' onClick={()=>handleSubmit()}>Sign Up</Button>
     </SignUpContainer>
   );
 };

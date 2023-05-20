@@ -11,7 +11,7 @@ import {
   CartItems,
 } from './cart-dropdown.styles';
 
-const CartDropdown = () => {
+const CartDropdown = ({position}) => {
   const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
 
@@ -19,16 +19,18 @@ const CartDropdown = () => {
     navigate('/checkout');
   };
 
+  const middlePosition = position / 2;
+
   return (
-    <CartDropdownContainer>
+    <CartDropdownContainer  right={-middlePosition - 50}>
       <CartItems>
         {cartItems.length ? (
-          cartItems.map((item) => <CartItem key={item.id} cartItem={item} />)
+          cartItems.map(item => <CartItem cartItem={item} />)
         ) : (
           <EmptyMessage>Your cart is empty</EmptyMessage>
         )}
       </CartItems>
-      <Button onClick={goToCheckoutHandler}>GO TO CHECKOUT</Button>
+      <Button className='mt-3' onClick={goToCheckoutHandler}>CHECKOUT</Button>
     </CartDropdownContainer>
   );
 };

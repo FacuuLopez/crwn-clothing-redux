@@ -14,22 +14,27 @@ import {
   doc,
   getDoc,
   setDoc,
+  addDoc,
   collection,
   writeBatch,
   query,
   getDocs,
+  serverTimestamp,
+  updateDoc,
+  onSnapshot,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDDU4V-_QV3M8GyhC9SVieRTDM4dbiT0Yk',
-  authDomain: 'crwn-clothing-db-98d4d.firebaseapp.com',
-  projectId: 'crwn-clothing-db-98d4d',
-  storageBucket: 'crwn-clothing-db-98d4d.appspot.com',
-  messagingSenderId: '626766232035',
-  appId: '1:626766232035:web:506621582dab103a4d08d6',
+  apiKey: "AIzaSyCVUrA5Jor_8xY_SD8re6-AkCSycmg5hwI",
+  authDomain: "crwn-clothing-8b675.firebaseapp.com",
+  projectId: "crwn-clothing-8b675",
+  storageBucket: "crwn-clothing-8b675.appspot.com",
+  messagingSenderId: "62098767735",
+  appId: "1:62098767735:web:0be46a3c52056f3e2deb72"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -38,8 +43,16 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () =>
-  signInWithPopup(auth, googleProvider);
+
+export const signInAuthWithGooglePopup = async () => {
+
+  console.log('entra aca');
+  const resultado = await signInWithPopup(auth, googleProvider);
+  console.log('resultado singin google', resultado);
+  return resultado;
+}
+
+
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
@@ -48,7 +61,6 @@ export const db = getFirestore();
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd,
-  field
 ) => {
   const collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
@@ -70,27 +82,39 @@ export const getCategoriesAndDocuments = async () => {
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
 
+export const updateUserCart = async (user, cartItems) => {
+  const userId = user.uid;
+  const userRef = doc(db, 'users', userId);
+  try {
+    await updateDoc(userRef, { cart: cartItems });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export const createUserDocumentFromAuth = async (
-  userAuth,
-  additionalInformation = {}
+  userAuth
 ) => {
   if (!userAuth) return;
 
   const userDocRef = doc(db, 'users', userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
-
+  console.log('userDocRef ', userDocRef);
+  console.log('userUid ', userAuth.uid)
+  console.log('userSnapshot ', userSnapshot);
+  console.log('userSnapshot.exist: ', userSnapshot.exists())
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
-    const createdAt = new Date();
-
+    const createdAt = serverTimestamp();
+    console.log("se va a crear doc")
     try {
-      await setDoc(userDocRef, {
+      const resultado = await setDoc(userDocRef, {
         displayName,
         email,
         createdAt,
-        ...additionalInformation,
       });
+      console.log("creacion doc", resultado)
     } catch (error) {
       console.log('error creating the user', error.message);
     }
@@ -99,7 +123,51 @@ export const createUserDocumentFromAuth = async (
   return userDocRef;
 };
 
+export const onUserCartChange = (user, callback) => {
+  const userId = user.uid;
+  const userDocRef = doc(db, "users", userId);
+
+  const unsubscribe = onSnapshot(userDocRef, { includeMetadataChanges: true }, (snapshot) => {
+    if (snapshot.exists() && snapshot.data().cart) {
+      const currentCart = snapshot.data().cart;
+      callback(currentCart)
+    }
+  });
+  return unsubscribe;
+}
+
+export const onUserPurchasesChange = (user, callback) => {
+  const userId = user.uid
+  const purchasesRef = collection(doc(db, "users", userId), "purchases");
+  const unsubscribe = onSnapshot(purchasesRef, { includeMetadataChanges: true }, (snapshot) => {
+    console.log('purSnap', snapshot)
+    if (!snapshot.empty) {
+      const userPurchases = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        console.log('purchase doc: ',data);
+        // Realiza cualquier manipulación adicional de los datos aquí, si es necesario
+        return data;
+      });
+      console.log('---------userPurchases---------', userPurchases);
+      callback(userPurchases);
+    }
+  });
+
+  return unsubscribe;
+}
+
+export const createNewPurchase = async (purchase, user) => {
+  if (!purchase) return;
+  const userId = user.uid
+  const purchasesRef = collection(doc(db, "users", userId), "purchases");
+  const newPurchaseRef = await addDoc(purchasesRef, purchase);
+  await updateUserCart(user, []);
+
+  console.log("Added new purchase with ID: ", newPurchaseRef.id);
+}
+
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  console.log('auth', auth);
   if (!email || !password) return;
 
   return await createUserWithEmailAndPassword(auth, email, password);
@@ -115,3 +183,33 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+export const createProducts = async(newProducts,user) => {
+  const userId = user.uid
+  const userProducts = collection(doc(db, "users", userId), "products");
+  const newProductsRef = await setDoc(doc(userProducts,'products'), {products: newProducts});
+  return newProductsRef;
+}
+
+export const getUserProducts = async(user) => {
+  const userId = user.uid
+  const userProductsRef = doc(db, "users", userId, "products", 'products');
+  const userProducts = await getDoc(userProductsRef);
+  return userProducts.data().products;
+}
+
+
+
+export const createCategories = async(newCategories,user) => {
+  const userId = user.uid
+  const userCategories = collection(doc(db, "users", userId), "categories");
+  const newCategoriesRef = await setDoc(doc(userCategories,'categories'), {categories: newCategories});
+  return newCategoriesRef;
+}
+
+export const getUserCategories = async(user) => {
+  const userId = user.uid
+  const userCategoriesRef = doc(db, "users", userId, "categories","categories");
+  const userCategories = await getDoc(userCategoriesRef);
+  return userCategories.data().categories;
+}
