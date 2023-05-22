@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import PanelCategory from "../panel-category/panel-category.component";
-import { fetchCategoriesStartAsync } from "../../store/categories/category.action";
+import { fetchCategoriesStartAsync } from "../../store/categories/category.reducer";
 import PanelCategoriesPreview from "../panel-categories-preview/panel-categories-preview.component";
 import ControlPanelPurchases from "../control-panel-purchases/control-panel-purchases";
 import ControlPanelCategories from "../../components/control-panel-categories/control-panel-categories.component";

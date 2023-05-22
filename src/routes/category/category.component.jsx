@@ -6,33 +6,33 @@ import ProductCard from '../../components/product-card/product-card.component';
 import Spinner from '../../components/spinner/spinner.component';
 
 import {
-  selectCategoriesMap,
+  selectCategories,
   selectIsLoading,
 } from '../../store/categories/category.selector';
 
 import { CategoryContainer, Title } from './category.styles';
+import { selectIsProductsLoading, selectProducts } from '../../store/products/product.selector';
+import { filterCategoryProducts } from '../../utils/categories/filter-categories';
 
 const Category = () => {
   const { category } = useParams();
-  const categoriesMap = useSelector(selectCategoriesMap);
+  const categories = useSelector(selectCategories);
   const isLoading = useSelector(selectIsLoading);
-  const [products, setProducts] = useState(categoriesMap[category]);
-
-  useEffect(() => {
-    setProducts(categoriesMap[category]);
-  }, [category, categoriesMap]);
+  const isProductsLoading = useSelector(selectIsProductsLoading)
+  const products = useSelector(selectProducts)
+  const categorySelected = categories.find(categoryItem => categoryItem.title.toLowerCase() === category.toLowerCase());
+  const categoryProducts = filterCategoryProducts(products, categorySelected.title)
 
   return (
     <Fragment>
       <Title>{category.toUpperCase()}</Title>
-      {isLoading ? (
+      {isLoading || isProductsLoading ? (
         <Spinner />
       ) : (
         <CategoryContainer>
-          {products &&
-            products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          {
+            categoryProducts.map(product => <ProductCard key={product.id} product={product} />)
+          }
         </CategoryContainer>
       )}
     </Fragment>

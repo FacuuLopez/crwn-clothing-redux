@@ -5,24 +5,19 @@ import { Link } from 'react-router-dom';
 import CartIcon from '../../components/cart-icon/cart-icon.component';
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component';
 import UserDropdown from '../../components/user-dropdown/user-dropdown.component';
-import { selectCurrentUser, selectIsUserOpen } from '../../store/user/user.selector';
-import { selectCartCount, selectIsCartOpen } from '../../store/cart/cart.selector';
+import { selectCurrentUser } from '../../store/user/user.selector';
+import { selectCartCount } from '../../store/cart/cart.selector';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import { ReactComponent as UserIcon } from '../../assets/user-icon.svg';
 import { ReactComponent as ShopIcon } from '../../assets/shopping-bag.svg';
-import { setIsCartOpen } from '../../store/cart/cart.action';
-import { setIsUserOpen } from '../../store/user/user.action';
 import { CartIconSpan } from './navigation.styles';
-import { selectIsConfigOpen } from '../../store/config/config.selector';
-import { setIsConfigOpen } from '../../store/config/config.action';
 import ConfigDropdown from '../../components/config-dropdown/config-dropdown.component';
 
 const Navigation = () => {
-  const dispatch = useDispatch()
   const currentUser = useSelector(selectCurrentUser);
-  const isCartOpen = useSelector(selectIsCartOpen);
-  const isUserOpen = useSelector(selectIsUserOpen);
-  const isConfigOpen = useSelector(selectIsConfigOpen);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isUserOpen, setIsUserOpen] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
   const cartCount = useSelector(selectCartCount);
   const [cartRight, setCartRight] = useState(0);
   const [userRight, setUserRight] = useState(0);
@@ -37,10 +32,6 @@ const Navigation = () => {
     setUserRight(getRightPosition(userRef));
     setConfigRight(getRightPosition(configRef));
 
-    // Puedes hacer algo con las posiciones obtenidas
-    console.log('Cart position right:', cartRight);
-    console.log('User position right:', userRight);
-    console.log('Config position right:', configRight);
   }, []);
 
   const getRightPosition = (ref) => {
@@ -57,19 +48,19 @@ const Navigation = () => {
     console.log(dropdown);
     switch (dropdown) {
       case 'cart':
-        isUserOpen && dispatch(setIsUserOpen(false));
-        isConfigOpen && dispatch(setIsConfigOpen(false));
-        dispatch(setIsCartOpen(!isCartOpen));
+        isUserOpen && setIsUserOpen(false);
+        isConfigOpen && setIsConfigOpen(false);
+        setIsCartOpen(!isCartOpen);
         break;
       case 'config':
-        isCartOpen && dispatch(setIsCartOpen(false));
-        isUserOpen && dispatch(setIsUserOpen(false));
-        dispatch(setIsConfigOpen(!isConfigOpen));
+        isCartOpen && setIsCartOpen(false);
+        isUserOpen && setIsUserOpen(false);
+        setIsConfigOpen(!isConfigOpen);
         break;
       case 'user':
-        isCartOpen && dispatch(setIsCartOpen(false));
-        isConfigOpen && dispatch(setIsConfigOpen(false));
-        dispatch(setIsUserOpen(!isUserOpen));
+        isCartOpen && setIsCartOpen(false);
+        isConfigOpen && setIsConfigOpen(false);
+        setIsUserOpen(!isUserOpen);
         break;
       default:
         break;

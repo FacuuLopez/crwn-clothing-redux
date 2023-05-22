@@ -82,6 +82,17 @@ export const getCategoriesAndDocuments = async () => {
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
 
+export const getCategories = async () => {
+  console.log('categoriessssa entra')
+  const categories = await getDoc(doc(db, 'categories', 'categories'));
+  return categories.data().categories
+}
+
+export const getProducts = async () => {
+  const products = await getDoc(doc(db, 'products', 'products'));
+  return products.data().products
+}
+
 export const updateUserCart = async (user, cartItems) => {
   const userId = user.uid;
   const userRef = doc(db, 'users', userId);
@@ -144,7 +155,7 @@ export const onUserPurchasesChange = (user, callback) => {
     if (!snapshot.empty) {
       const userPurchases = snapshot.docs.map((doc) => {
         const data = doc.data();
-        console.log('purchase doc: ',data);
+        console.log('purchase doc: ', data);
         // Realiza cualquier manipulación adicional de los datos aquí, si es necesario
         return data;
       });
@@ -184,14 +195,14 @@ export const signOutUser = async () => await signOut(auth);
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
 
-export const createProducts = async(newProducts,user) => {
+export const createProducts = async (newProducts, user) => {
   const userId = user.uid
   const userProducts = collection(doc(db, "users", userId), "products");
-  const newProductsRef = await setDoc(doc(userProducts,'products'), {products: newProducts});
+  const newProductsRef = await setDoc(doc(userProducts, 'products'), { products: newProducts });
   return newProductsRef;
 }
 
-export const getUserProducts = async(user) => {
+export const getUserProducts = async (user) => {
   const userId = user.uid
   const userProductsRef = doc(db, "users", userId, "products", 'products');
   const userProducts = await getDoc(userProductsRef);
@@ -200,16 +211,28 @@ export const getUserProducts = async(user) => {
 
 
 
-export const createCategories = async(newCategories,user) => {
-  const userId = user.uid
-  const userCategories = collection(doc(db, "users", userId), "categories");
-  const newCategoriesRef = await setDoc(doc(userCategories,'categories'), {categories: newCategories});
-  return newCategoriesRef;
+export const createCategories = async (newCategories, user) => {
+  try {
+    const userId = user.uid
+    const userCategories = collection(doc(db, "users", userId), "categories");
+    const newCategoriesRef = await setDoc(doc(userCategories, 'categories'), { categories: newCategories });
+    return newCategoriesRef;
+  }
+  catch (error) {
+    throw error;
+  }
 }
 
-export const getUserCategories = async(user) => {
-  const userId = user.uid
-  const userCategoriesRef = doc(db, "users", userId, "categories","categories");
-  const userCategories = await getDoc(userCategoriesRef);
-  return userCategories.data().categories;
+export const getUserCategories = async (user) => {
+  try {
+    const userId = user.uid
+    const userCategoriesRef = doc(db, "users", userId, "categories", "categories");
+    const userCategories = await getDoc(userCategoriesRef);
+    return userCategories.data().categories;
+  } catch (e) {
+    throw e;
+  }
+
+
+
 }

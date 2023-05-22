@@ -1,5 +1,5 @@
 import Purchase from "../components/purchase/purchase"
-import { emptyCart } from "../store/cart/cart.action";
+import { emptyCart } from "../store/cart/cart.reducer";
 import { createNewPurchase } from "../utils/firebase/firebase.utils";
 
 const ModalConfirmPurchase = ({ id,purchase,callback }) => {

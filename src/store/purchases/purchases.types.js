@@ -1,3 +1,0 @@
-export const PURCHASES_ACTION_TYPES = {
-  SET_PURCHASES: 'purchases/SET_PURCHASES',
-};

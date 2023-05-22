@@ -1,3 +1,0 @@
-export const CONFIG_ACTION_TYPES = {
-  SET_IS_CONFIG_OPEN: 'config/SET_IS_CONFIG_OPEN',
-};

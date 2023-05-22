@@ -16,7 +16,7 @@ import {
 import { createNewPurchase, updateUserCart } from '../../utils/firebase/firebase.utils';
 import { selectCurrentUser } from '../../store/user/user.selector';
 import { useEffect, useState } from 'react';
-import { emptyCart } from '../../store/cart/cart.action';
+import { emptyCart } from '../../store/cart/cart.reducer';
 import ModalConfirmPurchase from '../../modal-confirm-purchase/modal-confirm-purchase';
 import Purchase from '../../components/purchase/purchase';
 

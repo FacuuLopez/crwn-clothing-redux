@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchCategoriesStartAsync } from '../../store/categories/category.action';
+import { fetchCategoriesStartAsync } from '../../store/categories/category.reducer';
 import ProductsPreview from '../products-preview/products-preview.component';
 import Product from '../product/product';
 

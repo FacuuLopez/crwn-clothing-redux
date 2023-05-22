@@ -1,19 +1,21 @@
-import { PURCHASES_ACTION_TYPES } from './purchases.types';
+import { createSlice } from '@reduxjs/toolkit';
 
 const PURCHASES_INITIAL_STATE = {
   purcheases: [],
 };
 
-export const purchasesReducer = (state = PURCHASES_INITIAL_STATE, action = {}) => {
-  const { type, payload } = action;
-
-  switch (type) {
-    case PURCHASES_ACTION_TYPES.SET_PURCHASES:
-      return {
-        ...state,
-        purchases: payload,
-      };
-    default:
-      return state;
+const purchasesSlice = createSlice({
+  name: 'purchases',
+  initialState: PURCHASES_INITIAL_STATE,
+  reducers: {
+    setPurchases(state,action) {
+      state.purchases = action.payload;
+    }
   }
-};
+})
+
+export const {setPurchases} = purchasesSlice.actions;
+
+export const purchasesReducer = purchasesSlice.reducer;
+
+

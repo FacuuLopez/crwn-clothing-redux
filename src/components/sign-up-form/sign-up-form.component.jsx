@@ -31,7 +31,6 @@ const SignUpForm = () => {
       alert('passwords do not match');
       return;
     }
-    alert('llegaaasdadsawq')
     try {
       
       const { user } = await createAuthUserWithEmailAndPassword(

@@ -1,4 +1,0 @@
-export const WISH_LIST_ACTION_TYPES = {
-  SET_IS_WISH_LIST_OPEN: 'wish-list/SET_IS_WISH_LIST_OPEN',
-  SET_WISH_LIST_ITEMS: 'wish-list/SET_WISH_LIST_ITEMS',
-};

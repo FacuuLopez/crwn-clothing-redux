@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import ProductColor from './product-color/product-color';
-import { addManyCartItems } from '../../store/cart/cart.action';
+import { addManyCartItems } from '../../store/cart/cart.reducer';
 import { selectCartItems } from '../../store/cart/cart.selector';
 import { useNavigate } from 'react-router-dom';
 
