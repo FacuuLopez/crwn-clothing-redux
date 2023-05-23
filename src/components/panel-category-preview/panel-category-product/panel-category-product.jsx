@@ -15,7 +15,6 @@ const PanelCategoryProduct = ({ product }) => {
             <div className='card m-3'>
                 <img ref={imageRef} className='card-img-top' src={imageUrl} alt={`${name}`} />
                 <div className='card-body'>
-                    {/* <LikeIconStyle onClick={addProductToWishList} /> */}
                     <div className="d-flex justify-content-between align-items-center px-2">
                         <h6 className='card-title'> {name}</h6>
                         <button className='btn btn-danger text-uppercase'
