@@ -150,7 +150,7 @@ const Navigation = () => {
                   </li>
                 </>
               ) : (
-                <li className='nav-item' to='/auth'>SIGN IN</li>
+                <li><Link className='nav-item' to='/auth'>SIGN IN</Link></li>
               )}
             </ul>
           </div>

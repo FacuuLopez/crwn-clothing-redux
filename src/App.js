@@ -52,6 +52,12 @@ const App = () => {
   }, [])
 
   useEffect(() => {
+    dispatch(fetchCategoriesStartAsync(currentUser));
+    dispatch(fetchProductsStartAsync(currentUser));
+  }, []);
+
+
+  useEffect(() => {
     
     if (currentUser) {
       const updatePurchases = (purchases) => dispatch(setPurchases(purchases));
